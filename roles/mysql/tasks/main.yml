@@ -1,0 +1,6 @@
+---
+
+- include: install_mysql.yml
+- include: mysql_secure_installation.yml
+- include: create_users_db.yml
+

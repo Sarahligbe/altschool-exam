@@ -1,0 +1,33 @@
+---
+
+# These tasks downloads and installs composer,
+# uses the 'composer create-project' command to install laravel dependencies, copy the .env.example file to .env, and generate a key (php artisan key:generate).
+
+- name: Download Composer installer.
+  get_url:
+    url: '{{ composer_url }}'
+    dest: '{{ composer_dest_url }}'
+    mode: 0755
+  tags: composer
+
+- name: Install composer
+  command: php composer-setup.php
+  args:
+    chdir: /tmp
+    creates: '{{ composer_binary }}'
+  tags: composer
+
+- name: Move composer to a globally accessible location
+  command: mv '{{ composer_tmp }}' '{{ composer_binary }}'
+  args:
+    creates: '{{ composer_binary }}'
+  tags: composer
+
+- name: Run composer create-project which installs all the dependencies
+  command:
+    cmd: composer create-project
+    chdir: '{{ project_path }}'
+    creates: '{{ project_path }}/.env'
+  environment:
+    COMPOSER_NO_INTERACTION: "1"
+  tags: create_project

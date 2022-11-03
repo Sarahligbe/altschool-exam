@@ -1,0 +1,22 @@
+---
+
+# This task creates a new user and a database
+
+- name: Create a new mysql user
+  mysql_user:
+    login_user: '{{ mysql_login_user }}'
+    login_password: '{{ mysql_login_password }}'
+    name: '{{ mysql_username }}'
+    password: '{{ mysql_user_password }}'
+    priv: '*.*:ALL,GRANT'
+    state: present
+  tags: mysql
+
+- name: Create new database
+  mysql_db:
+    login_user: '{{ mysql_login_user }}'
+    login_password: '{{ mysql_login_password }}'
+    name: '{{ mysql_db_name }}'
+    state: present
+  tags: mysql
+

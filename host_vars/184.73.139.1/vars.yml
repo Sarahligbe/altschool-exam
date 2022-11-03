@@ -1,0 +1,37 @@
+---
+
+# These are the variables used by the playbooks
+
+domain: "sarahligbe.live"
+domain_alias: "www.sarahaligbe.live"
+ssl_email: "{{ vault_ssl_email }}"
+
+mysql_login_password: "{{ vault_mysql_login_password }}"
+mysql_user_password: "{{ vault_mysql_user_password }}"
+mysql_login_user: root
+mysql_username: exam
+mysql_db_name: examdb
+
+psql_login_password: "{{ vault_psql_login_password }}"
+psql_user_password: "{{ vault_psql_user_password }}"
+psql_config: /etc/postgresql/12/main/pg_hba.conf
+psql_username: ansible_user
+psql_db_name: ansible_db
+
+php_repo: ppa:ondrej/php
+git_repo_path: https://github.com/f1amy/laravel-realworld-example-app.git
+project_path: /var/www/exam-project
+project_group: www-data
+
+composer_url: https://getcomposer.org/installer
+composer_dest_url: /tmp/composer-setup.php
+composer_tmp: /tmp/composer.phar
+composer_binary: /usr/local/bin/composer
+
+apache_config_dest: /etc/apache2/sites-available/exam-project.conf
+
+render_page: "Route::get('/', function () {
+              return view('welcome');
+              });"
+psql_script: files/install_postgres.sh
+

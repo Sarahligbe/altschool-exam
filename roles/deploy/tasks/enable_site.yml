@@ -1,0 +1,20 @@
+---
+
+# These tasks enables the exam-project config,
+# enables rewrite
+# disables the default site
+
+- name: Enable exam-project.conf
+  command: a2ensite exam-project.conf
+  tags: apache_config
+
+- name: Enable mod_rewrite (a2enmod rewrite)
+  apache2_module:
+    name: rewrite
+    state: present
+  tags: apache_config
+
+- name: Disable default apache page
+  command: a2dissite 000-default.conf
+  notify: Restart apache
+  tags: apache_config

@@ -1,0 +1,18 @@
+---
+
+# These tasks installs the basics like git and ufw, and ensures ufw is active
+
+
+- name:
+  apt:
+    name:
+      - git
+      - ufw
+    state: present
+  tags: basics
+
+- name: Ensure the ufw service is started if it's not
+  service:
+    name: ufw
+    state: started
+  tags: basics

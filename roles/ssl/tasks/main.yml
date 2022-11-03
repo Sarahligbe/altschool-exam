@@ -1,0 +1,15 @@
+---
+
+# These tasks install certbot by Let's encrypt
+# and runs the command to install Free SSL, configure redirection to HTTPS and restarts the Apache server
+
+- name: Install certbot
+  apt:
+    name: python3-certbot-apache
+    state: present
+  tags: ssl
+
+- name: Install Free SSL, configure redirect to HTTPS and restart the Apache server
+  shell: certbot --apache --agree-tos --redirect -m '{{ ssl_email }}' -d '{{ domain }}' -d '{{ domain_alias }}'
+  tags: ssl
+

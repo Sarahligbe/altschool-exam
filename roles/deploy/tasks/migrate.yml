@@ -1,0 +1,10 @@
+---
+
+# This task migrates and seeds the database created
+
+- name: Populate the database
+  command:
+    cmd: php artisan migrate --seed
+    chdir: '{{ project_path }}'
+  notify: Restart mysql
+  tags: migrate

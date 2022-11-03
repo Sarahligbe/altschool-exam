@@ -1,0 +1,28 @@
+---
+
+# These tasks edit the .env file with the project's configurations
+# and the web.php file in order to render the laravel landing page
+
+- name: Edit the .env file
+  lineinfile:
+    path: '{{ project_path }}/.env'
+    regexp: '{{ item.regexp }}'
+    line: '{{ item.line }}'
+    state: present
+  loop:
+    - { regexp: '^APP_URL', line: 'APP_URL=http://{{ domain }}' }
+    - { regexp: '^DB_CONNECTION', line: 'DB_CONNECTION=mysql' }
+    - { regexp: '^DB_HOST', line: 'DB_HOST=localhost' }
+    - { regexp: '^DB_PORT', line: 'DB_PORT=3306' }
+    - { regexp: '^DB_DATABASE', line: 'DB_DATABASE={{ mysql_db_name }}' }
+    - { regexp: '^DB_USERNAME', line: 'DB_USERNAME={{ mysql_username }}' }
+    - { regexp: '^DB_PASSWORD', line: 'DB_PASSWORD={{ mysql_user_password }}' }
+  tags: edit
+
+- name: Render the laravel landing page
+  lineinfile:
+    path: '{{ project_path }}/routes/web.php'
+    regexp: '^\/\*Route[\s\S]+\*\/$'
+    line: "{{ render_page }}"
+    state: present
+  tags: render

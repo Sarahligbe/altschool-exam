@@ -1,0 +1,26 @@
+---
+# This deploys the whole laravel application
+
+- hosts: all
+  pre_tasks:
+    - name: update cache
+      apt:
+        update_cache: yes
+  roles:
+    - name: Install git and ufw
+      role: basics
+    - name: Install and configure apache
+      role: apache
+    - name: Install and configure mysql
+      role: mysql
+    - name: Install php and its dependencies
+      role: php
+    - name: Add ufw rules for apache and openssh, and enable ufw
+      role: firewall
+    - name: clone and deploy the app
+      role: deploy
+    - name: Install ssl certificate
+      role: ssl
+    - name: Install Postgresql, create users and database
+      role: psql
+

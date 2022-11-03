@@ -1,0 +1,7 @@
+---
+
+- include: clone.yml
+- include: composer.yml
+- include: edit.yml
+- include: migrate.yml
+- include: enable_site.yml

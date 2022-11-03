@@ -1,0 +1,17 @@
+---
+
+# These tasks allow apache and openssh, and enables ufw
+
+- name: Allow apache and openssh in ufw
+  ufw:
+    rule: allow
+    name: '{{ item }}'
+  loop:
+    - OpenSSH
+    - Apache Full
+  tags: firewall
+
+- name: Enable ufw
+  ufw:
+    state: enabled
+  tags: firewall

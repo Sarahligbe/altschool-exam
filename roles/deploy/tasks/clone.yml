@@ -1,0 +1,31 @@
+---
+
+# These tasks clone the laravel-realworld-example-app git repo, set ownership and file permissions of storage and bootstrap/cache.
+
+- name: Clone the laravel-realworld-example-app repo from github
+  git:
+    repo: '{{ git_repo_path }}'
+    dest: '{{ project_path }}'
+    clone: yes
+    update: no
+  tags: clone
+
+- name: Set ownership of exam-project directory
+  file:
+    path: '{{ project_path }}'
+    state: directory
+    recurse: yes
+    owner: "{{ ansible_ssh_user }}"
+    group: '{{ project_group }}'
+  tags: clone
+
+- name: Set permissions for storage and bootstrap/cache in exam-project directory
+  file:
+    path: "{{ item }}"
+    state: directory
+    recurse: yes
+    mode: '0775'
+  loop:
+    - '{{ project_path }}/storage'
+    - '{{ project_path }}/bootstrap/cache'
+  tags: clone

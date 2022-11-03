@@ -1,0 +1,38 @@
+---
+
+# This task mimics the mysql-secure-installation script
+# by creating a password for root and ensures root login from only localhost,
+# removes anonymous users and deletes test database
+
+- name: Set mysql root user password
+  mysql_user:
+    login_user: '{{ mysql_login_user }}'
+    login_password: '{{ mysql_login_password }}'
+    name: '{{ mysql_login_user }}'
+    password: '{{ mysql_login_password }}'
+    state: present
+    host: '{{ item }}'
+    check_implicit_admin: yes
+  loop:
+    - "{{ ansible_fqdn }}"
+    - 127.0.0.1
+    - ::1
+    - localhost
+  tags: mysql
+
+- name: Delete all anonymous mysql users
+  mysql_user:
+    login_user: '{{ mysql_login_user }}'
+    login_password: '{{ mysql_login_password }}'
+    name: ''
+    host_all: yes
+    state: absent
+  tags: mysql
+
+- name: Remove test database
+  mysql_db:
+    login_user: '{{ mysql_login_user }}'
+    login_password: '{{ mysql_login_password }}'
+    name: test
+    state: absent
+  tags: mysql

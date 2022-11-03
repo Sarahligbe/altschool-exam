@@ -1,0 +1,24 @@
+---
+
+# These tasks installs apache2, ensures it's started and adds a configuration file for the project
+
+- name: Install Apache2
+  apt:
+    name: apache2
+    state: present
+  tags: apache2
+
+- name: Ensure the apache2 service is started
+  service:
+    name: apache2
+    state: started
+  tags: apache2
+
+- name: Add apache virtual host configuration for exam-project
+  template:
+    src: templates/exam-project.conf.j2
+    dest: /etc/apache2/sites-available/exam-project.conf
+    owner: root
+    group: root
+    mode: 0644
+  tags: apache2
