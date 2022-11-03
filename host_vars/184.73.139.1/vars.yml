@@ -1,9 +1,9 @@
 ---
 
 # These are the variables used by the playbooks
+# The variables with vault prefix are linked to the variables in the vault file
 
 domain: "sarahligbe.live"
-domain_alias: "www.sarahaligbe.live"
 ssl_email: "{{ vault_ssl_email }}"
 
 mysql_login_password: "{{ vault_mysql_login_password }}"

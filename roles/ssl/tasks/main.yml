@@ -10,6 +10,6 @@
   tags: ssl
 
 - name: Install Free SSL, configure redirect to HTTPS and restart the Apache server
-  shell: certbot --apache --agree-tos --redirect -m '{{ ssl_email }}' -d '{{ domain }}' -d '{{ domain_alias }}'
+  shell: certbot --apache --agree-tos --redirect -m '{{ ssl_email }}' -d '{{ domain }}
   tags: ssl
 
